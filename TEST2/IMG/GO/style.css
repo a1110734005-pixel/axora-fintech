@@ -1,0 +1,527 @@
+:root {
+    --bg-color: #F8F9FB;
+    /* Very light gray/white */
+    --text-color: #111111;
+    --text-light: #666666;
+    --primary-gradient: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
+    --text-gradient: linear-gradient(90deg, #C779D0 0%, #4BC0C8 100%);
+    /* Purple to Blue-ish */
+    /* Adjust gradient to match image: "anytime" is Purple -> Blue */
+    --gradient-anytime: linear-gradient(90deg, #8E44AD, #3498DB);
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.6);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    position: relative;
+    z-index: 100;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: var(--text-color);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.btn-text {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    text-decoration: none;
+    background-color: #fff;
+    color: var(--text-color);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: calc(100vh - 80px);
+    /* Minus header */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.headline {
+    font-size: 5.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin-bottom: 2rem;
+    z-index: 10;
+    position: relative;
+    color: #111;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #A16BFE, #537CEC);
+    /* Improved match */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Floating Cards Setup */
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    /* Behind text? No, image shows cards intertwining text. Let's manage z-index or opacity */
+}
+
+/* The prompt image shows cards partly behind and in front. 
+   Left card is Behind text mostly? No, it obscures part of text? 
+   Actually, the text "control" is OVER the left card in some designs or card is semi transparent.
+   In the reference:
+   "Your funds" is clear.
+   "full"
+   Left card is mostly BEHIND "control"? Or "control" is Black and sharp.
+   Let's put cards BEHIND text for readability, or use z-index tricks.
+   Actually image: Text is clearly sharpest black. Cards seem to float AROUND.
+   Let's set z-index: 1 for Cards, 10 for Text.
+*/
+
+.floating-elements {
+    z-index: 1;
+}
+
+.glass-card {
+    position: absolute;
+    width: 320px;
+    height: 200px;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Specific Card Styles */
+.card-left {
+    top: 25%;
+    left: 15%;
+    background: linear-gradient(135deg, rgba(200, 240, 220, 0.6), rgba(200, 220, 255, 0.6));
+    transform: rotate(-15deg) translateZ(0);
+    animation: floatLeft 6s ease-in-out infinite;
+}
+
+.card-right {
+    top: 15%;
+    right: 18%;
+    background: linear-gradient(135deg, rgba(255, 220, 220, 0.7), rgba(230, 200, 255, 0.7));
+    transform: rotate(15deg) translateZ(0);
+    animation: floatRight 7s ease-in-out infinite;
+}
+
+/* Inner Card Content */
+.card-brand {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.4);
+    font-style: italic;
+}
+
+.card-number {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: auto;
+}
+
+.card-number-rot {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    transform: rotate(90deg);
+    position: absolute;
+    left: 10px;
+    bottom: 50px;
+}
+
+.card-asterisk {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 0.9rem;
+}
+
+/* Animations */
+@keyframes floatLeft {
+
+    0%,
+    100% {
+        transform: rotate(-15deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(-12deg) translateY(-20px);
+    }
+}
+
+@keyframes floatRight {
+
+    0%,
+    100% {
+        transform: rotate(15deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(18deg) translateY(-25px);
+    }
+}
+
+/* Bottom Area */
+.bottom-area {
+    margin-top: 5rem;
+    z-index: 10;
+}
+
+.subtext {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.app-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.store-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 0.5rem 1.2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.store-btn:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.store-btn i {
+    font-size: 1.8rem;
+    color: #000;
+}
+
+.btn-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.btn-info .small {
+    font-size: 0.6rem;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.btn-info .large {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .headline {
+        font-size: 4rem;
+    }
+
+    .card-left {
+        left: 5%;
+        top: 30%;
+        width: 250px;
+        height: 160px;
+    }
+
+    .card-right {
+        right: 5%;
+        width: 250px;
+        height: 160px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1.5rem;
+    }
+
+    .nav-links,
+    .nav-right {
+        display: none;
+    }
+
+    /* Simplified for mobile */
+    .headline {
+        font-size: 3rem;
+    }
+
+    .card-left,
+    .card-right {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        transform: none !important;
+        width: 80%;
+        margin: 1rem auto;
+        display: none;
+    }
+
+    .insights-cards {
+        overflow-x: auto;
+        padding-bottom: 2rem;
+    }
+}
+
+/* Financial Insights Section */
+.insights-section {
+    padding: 8rem 2rem;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.insights-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.section-desc {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out 0.2s;
+}
+
+.insights-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    align-items: flex-end;
+    /* Align bottom to show height difference effectively */
+}
+
+.insight-card {
+    position: relative;
+    /* Removed fixed height, will be set individually */
+    border-radius: 20px;
+    padding: 2.5rem;
+    display: flex;
+    align-items: flex-end;
+    /* Text at bottom */
+    overflow: hidden;
+    cursor: pointer;
+
+    /* Growing Animation Setup */
+    transform-origin: bottom center;
+    /* Grow from bottom */
+    transform: scaleY(0);
+    /* Start flat */
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+    /* Bouncy grow effect */
+}
+
+.insight-card:hover {
+    transform: scaleY(1) translateY(-10px) !important;
+    /* Keep it grown but move up slightly */
+}
+
+/* Specific Card Colors and Heights (Low -> High) */
+.card-grey {
+    background-color: #F5F6F8;
+    height: 250px;
+}
+
+.card-blue {
+    background-color: #ECECF9;
+    height: 320px;
+}
+
+.card-pink {
+    background-color: #FBEFEF;
+    height: 390px;
+}
+
+/* Liquid Animation Backgrounds - INTENSIFIED */
+.liquid-bg {
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    border-radius: 35%;
+    opacity: 0.9;
+    /* High visibility */
+    animation: liquidRotate 6s infinite linear;
+    /* Fast speed */
+    filter: blur(25px);
+    /* Sharper edges */
+    z-index: 1;
+}
+
+.blob-grey {
+    background: linear-gradient(135deg, #dcdcdc, #ffffff);
+}
+
+.blob-blue {
+    background: linear-gradient(135deg, #A16BFE, #537CEC);
+    opacity: 0.7;
+}
+
+.blob-pink {
+    background: linear-gradient(135deg, #FF9A9E, #FECFEF);
+    opacity: 0.8;
+}
+
+@keyframes liquidRotate {
+    0% {
+        transform: rotate(0deg) translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: rotate(90deg) translate(60px, -40px) scale(1.2);
+    }
+
+    50% {
+        transform: rotate(180deg) translate(-30px, 80px) scale(0.8);
+    }
+
+    75% {
+        transform: rotate(270deg) translate(50px, 30px) scale(1.1);
+    }
+
+    100% {
+        transform: rotate(360deg) translate(0, 0) scale(1);
+    }
+}
+
+/* Card Data Content */
+.card-data {
+    position: relative;
+    z-index: 2;
+    /* Above liquid */
+}
+
+.card-data h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #111;
+}
+
+.card-data p {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Visible State for Scroll Reveal */
+.visible {
+    opacity: 1;
+    transform: scaleY(1);
+    /* Full height */
+}
